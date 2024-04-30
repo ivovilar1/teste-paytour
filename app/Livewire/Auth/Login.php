@@ -25,7 +25,7 @@ class Login extends Component
             'email' => $this->email,
             'password' => $this->password,
         ])) {
-            $this->addError('invalid', 'Invalid email or password');
+            $this->addError('invalidCredentials', trans('auth.failed'));
             return ;
         }
 
