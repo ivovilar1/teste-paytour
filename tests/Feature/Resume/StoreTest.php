@@ -92,4 +92,43 @@ describe('validations', function () {
             'required' => ['required', ''],
             'max' => ['max', str_repeat('a', 256)],
         ]);
+    test('escolaridade', function ($rule, $value) {
+        Livewire::test(Dashboard::class)
+            ->set('escolaridade', $value)
+            ->call('store')
+            ->assertHasErrors(['escolaridade' => $rule]);
+    })
+        ->with([
+            'required' => ['required', ''],
+        ]);
+    test('arquivo should be required', function () {
+        Livewire::test(Dashboard::class)
+            ->set('arquivo', '')
+            ->call('store')
+            ->assertHasErrors(['arquivo' => __('validation.required', ['attribute' => 'arquivo'])]);
+    });
+    test('arquivo should be file', function () {
+        Livewire::test(Dashboard::class)
+            ->set('arquivo', 'not-a-file')
+            ->call('store')
+            ->assertHasErrors(['arquivo' => __('validation.file', ['attribute' => 'arquivo'])]);
+    });
+    test('arquivo should valid mimes type', function () {
+        $file = createFakeFile('resume.csv', 100, 'text/csv');
+        Livewire::test(Dashboard::class)
+            ->set('arquivo', $file)
+            ->call('store')
+            ->assertHasErrors();
+    });
+    test("arquivo size shouldn't be greater then 1mb", function () {
+        $file = createFakeFile('resume.pdf', 1500, 'pdf');
+        Livewire::test(Dashboard::class)
+            ->set('arquivo', $file)
+            ->call('store')
+            ->assertHasErrors(['arquivo' => __('validation.max.file', ['attribute' => 'arquivo', 'max' => '1024'])]);
+    });
 });
+function createFakeFile(string $name, int $size, string $mimeType): UploadedFile
+{
+    return UploadedFile::fake()->create($name, $size, $mimeType);
+}

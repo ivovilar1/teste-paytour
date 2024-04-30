@@ -2,10 +2,12 @@
 
 namespace App\Livewire;
 
+use App\Enum\EscolaridadeEnum;
 use App\Mail\ResumeReceived;
 use App\Models\Resume;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -23,10 +25,11 @@ class Dashboard extends Component
     public ?string $telefone = null;
     #[Validate('required|max:255')]
     public ?string $cargo = null;
+    #[Validate('required')]
     public ?string $escolaridade = null;
     public ?string $observacoes = null;
+    #[Validate('required|file|mimes:pdf,doc,docx|max:1024')]
     public $arquivo;
-    public ?string $data_envio = null;
 
     public function render(): View
     {
@@ -45,7 +48,7 @@ class Dashboard extends Component
             'escolaridade' => $this->escolaridade,
             'observacoes' => $this->observacoes,
             'arquivo' => $this->arquivo->store(path: 'public'),
-            'data_envio' => $this->data_envio,
+            'data_envio' => now(),
         ]);
 
         Mail::to('admin@admin.com')->send(new ResumeReceived($resume));
