@@ -46,3 +46,28 @@ it('should be able to create a new resume', function () {
 
     Mail::assertSent(ResumeReceived::class);
 });
+
+describe('validations', function () {
+    test('nome', function ($rule, $value) {
+        Livewire::test(Dashboard::class)
+            ->set('nome', $value)
+            ->call('store')
+            ->assertHasErrors(['nome' => $rule]);
+    })
+        ->with([
+            'required' => ['required', ''],
+            'min' => ['min', 'Jo'],
+            'max' => ['max', str_repeat('a', 66)]
+        ]);
+    test('email', function ($rule, $value) {
+        Livewire::test(Dashboard::class)
+            ->set('email', $value)
+            ->call('store')
+            ->assertHasErrors(['email' => $rule]);
+    })
+        ->with([
+            'required' => ['required', ''],
+            'email' => ['email', 'not-valid-email'],
+            'max' => ['max', str_repeat('a', 255) . '@doe.com']
+        ]);
+});

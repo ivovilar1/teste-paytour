@@ -6,6 +6,7 @@ use App\Mail\ResumeReceived;
 use App\Models\Resume;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Mail;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -14,7 +15,9 @@ class Dashboard extends Component
 {
     use WithFileUploads;
 
+    #[Validate('required|min:3|max:65')]
     public ?string $nome = null;
+    #[Validate('required|email|max:255')]
     public ?string $email = null;
     public ?string $telefone = null;
     public ?string $cargo = null;
@@ -30,6 +33,8 @@ class Dashboard extends Component
 
     public function store(): void
     {
+        $this->validate();
+
         $resume = Resume::query()->create([
             'nome' => $this->nome,
             'email' => $this->email,
