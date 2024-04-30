@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\EscolaridadeEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,4 +20,10 @@ class Resume extends Model
         'arquivo',
         'data_envio',
     ];
+    protected function casts(): array
+    {
+        return [
+            'escolaridade' => EscolaridadeEnum::class,
+        ];
+    }
 }
