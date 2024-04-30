@@ -8,5 +8,5 @@ Route::get('/login', Auth\Login::class)->name('login');
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', Dashboard::class)->name('dashboard');
+    Route::get('/', Dashboard::class)->name('dashboard');
 });

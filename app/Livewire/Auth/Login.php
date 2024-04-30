@@ -4,6 +4,7 @@ namespace App\Livewire\Auth;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 class Login extends Component
@@ -12,6 +13,7 @@ class Login extends Component
 
     public string $password = 'password';
 
+    #[Layout('components.layouts.guest')]
     public function render(): View
     {
         return view('livewire.auth.login');
