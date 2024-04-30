@@ -4,7 +4,7 @@
         <x-input label="E-mail" wire:model="email" />
         <x-input label="Telefone" wire:model="telefone" />
         <x-input label="Cargo" wire:model="cargo" />
-        <x-select label="Escolaridade" :options="[]" wire:model="escolaridade" />
+        <x-select label="Escolaridade" :options="$escolaridades" wire:model="escolaridade" />
         <x-textarea
             label="Observações"
             wire:model="observacoes"

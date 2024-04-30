@@ -35,7 +35,15 @@ class Dashboard extends Component
 
     public function render(): View
     {
-        return view('livewire.dashboard');
+        $escolaridades = [];
+
+        foreach (EscolaridadeEnum::cases() as $enumValue) {
+            $escolaridades[] = [
+                'id' => $enumValue->value,
+                'name' => $enumValue->getName(),
+            ];
+        }
+        return view('livewire.dashboard', compact('escolaridades'));
     }
 
     public function store(): void
@@ -55,5 +63,6 @@ class Dashboard extends Component
         ]);
 
         Mail::to('admin@admin.com')->send(new ResumeReceived($resume));
+        $this->reset();
     }
 }
