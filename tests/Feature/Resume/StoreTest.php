@@ -30,6 +30,7 @@ it('should be able to create a new resume', function () {
         ->set('observacoes', '')
         ->set('arquivo', $file)
         ->set('data_envio', now())
+        ->set('ip_address', '127.0.0.1')
         ->call('store')
         ->assertHasNoErrors()
         ->assertOk();

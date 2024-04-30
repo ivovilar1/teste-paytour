@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('observacoes')->nullable();
             $table->string('arquivo');
             $table->dateTime('data_envio');
+            $table->ipAddress();
             $table->timestamps();
         });
     }

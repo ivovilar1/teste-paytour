@@ -51,6 +51,7 @@ class Dashboard extends Component
             'observacoes' => $this->observacoes,
             'arquivo' => $this->arquivo->store(path: 'public'),
             'data_envio' => $this->data_envio,
+            'ip_address' => request()->ip()
         ]);
 
         Mail::to('admin@admin.com')->send(new ResumeReceived($resume));

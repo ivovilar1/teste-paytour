@@ -19,6 +19,7 @@ class Resume extends Model
         'observacoes',
         'arquivo',
         'data_envio',
+        'ip_address'
     ];
     protected function casts(): array
     {
