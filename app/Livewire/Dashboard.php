@@ -30,6 +30,8 @@ class Dashboard extends Component
     public ?string $observacoes = null;
     #[Validate('required|file|mimes:pdf,doc,docx|max:1024')]
     public $arquivo;
+    #[Validate('required|date_format:Y-m-d H:i:s')]
+    public ?string $data_envio = null;
 
     public function render(): View
     {
@@ -48,7 +50,7 @@ class Dashboard extends Component
             'escolaridade' => $this->escolaridade,
             'observacoes' => $this->observacoes,
             'arquivo' => $this->arquivo->store(path: 'public'),
-            'data_envio' => now(),
+            'data_envio' => $this->data_envio,
         ]);
 
         Mail::to('admin@admin.com')->send(new ResumeReceived($resume));

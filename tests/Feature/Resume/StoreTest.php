@@ -127,6 +127,16 @@ describe('validations', function () {
             ->call('store')
             ->assertHasErrors(['arquivo' => __('validation.max.file', ['attribute' => 'arquivo', 'max' => '1024'])]);
     });
+    test('data_envio', function ($rule, $value) {
+        Livewire::test(Dashboard::class)
+            ->set('data_envio', $value)
+            ->call('store')
+            ->assertHasErrors(['data_envio' => $rule]);
+    })
+        ->with([
+            'required' => ['required', ''],
+            'date_format' => ['date_format', '2024-04-30'],
+        ]);
 });
 function createFakeFile(string $name, int $size, string $mimeType): UploadedFile
 {
