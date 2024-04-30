@@ -19,7 +19,9 @@ class Dashboard extends Component
     public ?string $nome = null;
     #[Validate('required|email|max:255')]
     public ?string $email = null;
+    #[Validate('required|min:8|max:10|regex:/^\d{10}$/')]
     public ?string $telefone = null;
+    #[Validate('required|max:255')]
     public ?string $cargo = null;
     public ?string $escolaridade = null;
     public ?string $observacoes = null;

@@ -24,7 +24,7 @@ it('should be able to create a new resume', function () {
     Livewire::test(Dashboard::class)
         ->set('nome', 'Joe Doe')
         ->set('email', 'joe@doe.com')
-        ->set('telefone', '11111111111')
+        ->set('telefone', '1111111111')
         ->set('cargo', 'dev fullstack php')
         ->set('escolaridade', 1)
         ->set('observacoes', '')
@@ -69,5 +69,27 @@ describe('validations', function () {
             'required' => ['required', ''],
             'email' => ['email', 'not-valid-email'],
             'max' => ['max', str_repeat('a', 255) . '@doe.com']
+        ]);
+    test('telefone', function ($rule, $value) {
+        Livewire::test(Dashboard::class)
+            ->set('telefone', $value)
+            ->call('store')
+            ->assertHasErrors(['telefone' => $rule]);
+    })
+        ->with([
+            'required' => ['required', ''],
+            'min' => ['min', '1111'],
+            'max' => ['max', '11111111111'],
+            'regex' => ['regex', '1111-111']
+        ]);
+    test('cargo', function ($rule, $value) {
+        Livewire::test(Dashboard::class)
+            ->set('cargo', $value)
+            ->call('store')
+            ->assertHasErrors(['cargo' => $rule]);
+    })
+        ->with([
+            'required' => ['required', ''],
+            'max' => ['max', str_repeat('a', 256)],
         ]);
 });

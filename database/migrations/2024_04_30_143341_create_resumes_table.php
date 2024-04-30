@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('nome', 65);
             $table->string('email');
-            $table->string('telefone', 20);
+            $table->string('telefone', 10);
             $table->string('cargo', 255);
             $table->integer('escolaridade');
             $table->text('observacoes')->nullable();
